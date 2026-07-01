@@ -136,9 +136,8 @@ export default function Specifications() {
               <div
                 key={index}
                 className="row py-4 px-3 align-items-start style-spec-row"
-                /* --- CẤU HÌNH AOS CHO TỪNG DÒNG THÔNG SỐ --- */
                 data-aos="fade-left"
-                data-aos-delay={index * 80} // Tạo hiệu ứng xếp hàng thác nước (staggered) cực kỳ mượt mà
+                data-aos-delay={Math.min(index * 40, 200)}
                 data-aos-trigger-hidden="true"
                 style={{
                   borderBottom: "1px solid rgba(234, 226, 201, 0.5)",
@@ -180,73 +179,54 @@ export default function Specifications() {
           overflow: visible;
         }
 
-        /* Khối box trái: màu trắng ngả vàng ấm cao cấp */
         .cream-box-container {
           background: var(--surface-2);
           border: 1px solid var(--border);
           box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-          transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+          transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
         
         .cream-box-container:hover {
           border-color: #8f734b;
-          box-shadow: 0 20px 40px rgba(170, 112, 32, 0.08);
+          box-shadow: 0 15px 35px rgba(170, 112, 32, 0.06);
         }
         
-        /* Dải màu chuyển động tuần hoàn đồng bộ tông màu Warm Luxury */
         .dynamic-neon-title, .luxury-text-shimmer {
-          background: linear-gradient(90deg, #1d1d1f, #8f734b, #b59a73, #8f734b, #1d1d1f);
+          background: linear-gradient(90deg, #1d1d1f, #8f734b, #1d1d1f);
           background-size: 200% auto;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
-          animation: textGlowFlow 6s ease-in-out infinite;
         }
 
-        @keyframes textGlowFlow {
-          0% { background-position: 0% center; }
-          50% { background-position: 100% center; }
-          100% { background-position: 200% center; }
-        }
-        
-        /* Đèn nền Ambient khuếch tán dải màu Desert ấm dịu */
         .spec-ambient-glow {
           position: absolute;
-          width: 750px;
-          height: 750px;
-          top: -10%;
-          left: -20%;
-          background: radial-gradient(circle, rgba(244, 238, 224, 0.6) 0%, rgba(250, 246, 235, 0) 70%);
-          filter: blur(120px);
+          width: 600px;
+          height: 600px;
+          top: 0;
+          left: -15%;
+          background: radial-gradient(circle, rgba(244, 238, 224, 0.3) 0%, rgba(250, 246, 235, 0) 60%);
+          filter: blur(100px);
           pointer-events: none;
           z-index: -1;
-          animation: ambientPulseSpec 12s ease-in-out infinite alternate;
         }
 
-        @keyframes ambientPulseSpec {
-          0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
-          100% { transform: translate(40px, -20px) scale(1.08); opacity: 0.9; }
-        }
-
-        /* Định vị cấu trúc hàng bảng thông số */
         .style-spec-row {
-          will-change: transform, opacity;
-          transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
-          border-radius: 14px;
+          transition: background-color 0.2s ease, box-shadow 0.2s ease;
+          border-radius: 12px;
           margin-left: -1rem;
           margin-right: -1rem;
-          background-color: rgba(0, 0, 0, 0);
+          background-color: transparent;
         }
 
-        /* --- HIỆU ỨNG HOVER BẢNG THÔNG SỐ SẴN CÓ --- */
         .style-spec-row:hover {
           background-color: var(--surface); 
-          box-shadow: inset 4px 0 0 0 #8f734b; 
+          box-shadow: inset 3px 0 0 0 #8f734b; 
           padding-left: 1.5rem !important; 
         }
 
         .style-spec-row .spec-label,
         .style-spec-row .spec-value {
-          transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: color 0.2s ease;
         }
 
         .style-spec-row:hover .spec-label {
@@ -255,7 +235,6 @@ export default function Specifications() {
         }
 
         .style-spec-row:hover .spec-value {
-          transform: translateX(6px); 
           color: #8f734b !important; 
         }
       `}</style>

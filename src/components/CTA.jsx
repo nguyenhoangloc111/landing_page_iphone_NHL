@@ -60,95 +60,36 @@ export default function CTA() {
     >
       {/* CSS STYLES: Tích hợp hiệu ứng Shimmer & AOS Continuous Loop Animations */}
       <style>{`
-        /* --- HIỆU ỨNG TIÊU ĐỀ CHÍNH H2 --- */
         .premium-shimmer-main {
-          background: linear-gradient(
-            to right, 
-            #1d1d1f 0%, 
-            #a1845c 25%, 
-            #8f734b 50%, 
-            #a1845c 75%, 
-            #1d1d1f 100%
-          );
-          background-size: 200% auto;
+          background: linear-gradient(to right, #1d1d1f 0%, #8f734b 50%, #1d1d1f 100%);
+          background-size: 100% auto;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           display: block;
           width: 100%;
-          /* Kết hợp quét sáng 6s và nhịp thở nhẹ nhàng chu kỳ 2s */
-          animation: 
-            shimmerRun 6s linear infinite, 
-            premiumBreath 2s ease-in-out infinite alternate;
-          transition: all 0.5s ease-in-out;
+          transition: all 0.3s ease;
         }
 
         .premium-shimmer-main:hover {
           letter-spacing: -0.02em !important;
-          filter: drop-shadow(0 2px 8px rgba(143, 115, 75, 0.2));
+          filter: drop-shadow(0 1px 4px rgba(143, 115, 75, 0.15));
         }
 
-        /* --- HIỆU ỨNG TIÊU ĐỀ CON H3 TRONG CARD --- */
         .premium-shimmer-sub {
-          background: linear-gradient(
-            to right, 
-            #1d1d1f 0%, 
-            #8f734b 40%, 
-            #1d1d1f 100%
-          );
-          background-size: 200% auto;
+          background: linear-gradient(to right, #1d1d1f 0%, #8f734b 50%, #1d1d1f 100%);
+          background-size: 100% auto;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
-          animation: shimmerRun 8s linear infinite;
-          transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+          transition: all 0.3s ease;
         }
 
-        /* Tương tác mượt mà khi người dùng hover vào toàn bộ Card lớn */
         .main-cta-card:hover .premium-shimmer-sub {
-          transform: scale(1.02);
-          background: linear-gradient(
-            to right, 
-            #a1845c 0%, 
-            #8f734b 50%, 
-            #a1845c 100%
-          );
-          background-size: 200% auto;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
+          transform: none;
+          filter: brightness(1.05);
         }
 
-        /* --- HIỆU ỨNG CHUYỂN ĐỘNG VĨNH VIỄN CHU KỲ 2 GIÂY CHO CARD --- */
         .card-continuous-loop {
-          /* Nhịp thở di chuyển tịnh tiến cực nhẹ lên xuống 3px để tạo cảm giác sống động không gây khó chịu */
-          animation: cardFloatLoop 2s ease-in-out infinite alternate;
-        }
-
-        /* Tự động tạm dừng chuyển động vô hạn khi đang tương tác kéo form để tối ưu UX nhập liệu */
-        .main-cta-card:focus-within {
-          animation-play-state: paused;
-        }
-
-        /* --- KEYFRAMES HOẠT HỌA --- */
-        @keyframes shimmerRun {
-          0% { background-position: 0% center; }
-          100% { background-position: -200% center; }
-        }
-
-        @keyframes premiumBreath {
-          0% {
-            transform: scale(1);
-          }
-          100% {
-            transform: scale(1.012);
-          }
-        }
-
-        @keyframes cardFloatLoop {
-          0% {
-            transform: translateY(0);
-          }
-          100% {
-            transform: translateY(-3px);
-          }
+          animation: none;
         }
 
         @keyframes fadeInUp {
@@ -162,7 +103,6 @@ export default function CTA() {
           }
         }
 
-        /* --- UI UTILITIES --- */
         .custom-input::placeholder {
           color: #767679 !important;
           opacity: 0.8;
@@ -195,19 +135,14 @@ export default function CTA() {
           cursor: "pointer",
         }}
         onMouseEnter={(e) => {
-          // Tạm dừng animation loop khi hover để kích hoạt trạng thái Hover Premium mượt mà hơn
-          e.currentTarget.style.animationPlayState = "paused";
-          e.currentTarget.style.transform = "translateY(-6px)";
           e.currentTarget.style.boxShadow =
-            "0 30px 60px rgba(139, 115, 85, 0.12), 0 0 50px rgba(234, 213, 163, 0.4)";
-          e.currentTarget.style.borderColor = "rgba(197, 160, 89, 0.35)";
+            "0 25px 50px rgba(139, 115, 85, 0.1)";
+          e.currentTarget.style.transform = "translateY(-3px)";
         }}
         onMouseLeave={(e) => {
-          // Kích hoạt lại animation loop sau khi rê chuột ra ngoài
-          e.currentTarget.style.animationPlayState = "running";
           e.currentTarget.style.boxShadow =
-            "0 20px 40px rgba(139, 115, 85, 0.06)";
-          e.currentTarget.style.borderColor = "rgba(234, 226, 201, 0.6)";
+            "0 20px 40px rgba(139, 115, 85, 0.05)";
+          e.currentTarget.style.transform = "translateY(0)";
         }}
       >
         {/* Vệt sáng chạy ngầm màu hổ phách dịu nhẹ (Ambient Light Effect) */}
