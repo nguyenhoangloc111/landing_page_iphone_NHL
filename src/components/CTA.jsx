@@ -107,6 +107,42 @@ export default function CTA() {
           color: #767679 !important;
           opacity: 0.8;
         }
+
+        /* Mobile optimization: Disable heavy effects */
+        @media (max-width: 768px) {
+          .premium-shimmer-main {
+            background: none !important;
+            -webkit-background-clip: unset !important;
+            -webkit-text-fill-color: unset !important;
+            color: var(--text) !important;
+            filter: none !important;
+          }
+
+          .premium-shimmer-main:hover {
+            filter: none !important;
+            letter-spacing: normal !important;
+          }
+
+          .premium-shimmer-sub {
+            background: none !important;
+            -webkit-background-clip: unset !important;
+            -webkit-text-fill-color: unset !important;
+            color: var(--text) !important;
+          }
+
+          .main-cta-card:hover .premium-shimmer-sub {
+            transform: none !important;
+            filter: none !important;
+          }
+
+          .main-cta-card {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+          }
+
+          .main-cta-card:hover {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+          }
+        }
       `}</style>
 
       {/* TIÊU ĐỀ SECTION - Sử dụng hiệu ứng AOS fade-up */}

@@ -143,6 +143,41 @@ export default function Hero() {
         .interactive-3d-box {
           transition: transform 0.5s cubic-bezier(0.15, 0.85, 0.35, 1), box-shadow 0.3s, border-color 0.3s !important;
         }
+
+        /* Mobile optimization: Disable heavy effects */
+        @media (max-width: 768px) {
+          .dynamic-neon-title {
+            background: none !important;
+            -webkit-text-fill-color: unset !important;
+            color: var(--text) !important;
+            animation: none !important;
+          }
+
+          .btn-hero-prime {
+            box-shadow: none !important;
+            animation: none !important;
+          }
+
+          .btn-hero-prime:hover {
+            transform: none !important;
+            box-shadow: none !important;
+          }
+
+          .slider-arrow-btn:hover {
+            transform: translateY(-50%) !important;
+            box-shadow: none !important;
+          }
+
+          .interactive-3d-box {
+            transform: none !important;
+            box-shadow: none !important;
+          }
+
+          .slider-wrapper:hover .slider-arrow-btn {
+            opacity: 0.6 !important;
+            box-shadow: none !important;
+          }
+        }
       `}</style>
 
       {/* Ánh sáng Cyber mờ chạy ngầm theo chuột */}

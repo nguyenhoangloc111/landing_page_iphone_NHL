@@ -237,6 +237,39 @@ export default function Specifications() {
         .style-spec-row:hover .spec-value {
           color: #8f734b !important; 
         }
+
+        /* Mobile optimization: Disable heavy effects */
+        @media (max-width: 768px) {
+          .spec-ambient-glow {
+            display: none !important;
+          }
+
+          .dynamic-neon-title, .luxury-text-shimmer {
+            background: none !important;
+            -webkit-background-clip: unset !important;
+            -webkit-text-fill-color: unset !important;
+            color: var(--text) !important;
+          }
+
+          .cream-box-container {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+          }
+
+          .cream-box-container:hover {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+          }
+
+          .style-spec-row:hover {
+            box-shadow: none !important;
+            background-color: transparent !important;
+            padding-left: 1rem !important;
+          }
+
+          .style-spec-row .spec-label,
+          .style-spec-row .spec-value {
+            transition: none !important;
+          }
+        }
       `}</style>
     </section>
   );
