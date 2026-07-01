@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // Lưu ý: Đảm bảo bạn đã install và init aos ở wrapper/root component (App.js hoặc main.jsx)
 // import AOS from 'aos';
 // import 'aos/dist/aos.css';

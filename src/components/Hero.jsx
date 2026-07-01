@@ -23,13 +23,12 @@ export default function Hero() {
 
   // 2. Tự động chuyển ảnh sau mỗi 4 giây
   useEffect(() => {
-    const timer = setInterval(() => {
-      handleNext();
-    }, 4000);
+    const handleNextClick = () => {
+      setCurrentIdx((prevIdx) => (prevIdx + 1) % images.length);
+    };
+    const timer = setInterval(handleNextClick, 4000); 
     return () => clearInterval(timer);
-  }, [currentIdx]); // Chạy lại timer mỗi khi index thay đổi để tránh bị xung đột khi người dùng bấm click thủ công
-
-  // Hàm chuyển đến ảnh phía trước (Mũi tên trái)
+  }, [images.length]); // Chạy lại timer mỗi khi images thay đổi
   const handlePrev = () => {
     setCurrentIdx((prevIdx) => (prevIdx - 1 + images.length) % images.length);
   };
