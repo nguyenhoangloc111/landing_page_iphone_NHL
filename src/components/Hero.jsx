@@ -10,8 +10,11 @@ export default function Hero() {
 
   const images = [imageIphone1, imageIphone2, imageIphone3];
 
-  // 1. Theo dõi tọa độ chuột để làm hiệu ứng tương tác 3D mượt mà
+  // 1. Theo dõi tọa độ chuột để làm hiệu ứng tương tác 3D mượt mà (chỉ desktop)
   useEffect(() => {
+    // Disable mouse tracking on mobile to improve performance
+    if (window.matchMedia("(max-width: 768px)").matches) return;
+    
     const handleMouseMove = (e) => {
       const x = (e.clientX / window.innerWidth - 0.5) * 25;
       const y = (e.clientY / window.innerHeight - 0.5) * 25;
@@ -26,7 +29,7 @@ export default function Hero() {
     const handleNextClick = () => {
       setCurrentIdx((prevIdx) => (prevIdx + 1) % images.length);
     };
-    const timer = setInterval(handleNextClick, 4000); 
+    const timer = setInterval(handleNextClick, 4000);
     return () => clearInterval(timer);
   }, [images.length]); // Chạy lại timer mỗi khi images thay đổi
   const handlePrev = () => {

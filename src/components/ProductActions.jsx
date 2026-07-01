@@ -105,6 +105,8 @@ export default function ProductActions() {
                     src={selectedColor.img}
                     alt={`iPhone 17 Pro Max ${selectedColor.name}`}
                     className="product-view-img"
+                    loading="lazy"
+                    decoding="async"
                   />
 
                   <button
