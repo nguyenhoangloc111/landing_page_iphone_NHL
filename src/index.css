@@ -55,7 +55,11 @@ body {
     color 0.3s ease;
 }
 
-body * {
+/* Only apply transitions to interactive elements */
+button, a, input, textarea, select, [role="button"],
+.navbar, .nav-link, .dropdown-menu, .form-control,
+.feature-card, .cream-box, .product-actions-shell,
+.main-cta-card, .spec-item {
   transition:
     background-color 0.3s ease,
     color 0.3s ease,
@@ -73,7 +77,10 @@ body * {
 }
 
 @media (max-width: 768px) {
-  body * {
+  button, a, input, textarea, select, [role="button"],
+  .navbar, .nav-link, .dropdown-menu, .form-control,
+  .feature-card, .cream-box, .product-actions-shell,
+  .main-cta-card, .spec-item {
     transition-duration: 0.15s !important;
   }
   
@@ -96,52 +103,52 @@ code {
   color: var(--text);
 }
 
-body[data-theme="dark"] .text-dark {
+html[data-theme="dark"] .text-dark {
   color: var(--text) !important;
 }
 
-body[data-theme="dark"] .text-muted {
+html[data-theme="dark"] .text-muted {
   color: var(--text-muted) !important;
 }
 
-body[data-theme="dark"] .cream-box,
-body[data-theme="dark"] .feature-card,
-body[data-theme="dark"] .main-cta-card,
-body[data-theme="dark"] .cream-box-container,
-body[data-theme="dark"] .product-actions-shell {
+html[data-theme="dark"] .cream-box,
+html[data-theme="dark"] .feature-card,
+html[data-theme="dark"] .main-cta-card,
+html[data-theme="dark"] .cream-box-container,
+html[data-theme="dark"] .product-actions-shell {
   background: var(--surface-2);
   border-color: var(--border);
   color: var(--text);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
 }
 
-body[data-theme="dark"] .feature-card p,
-body[data-theme="dark"] .spec-label,
-body[data-theme="dark"] .spec-value,
-body[data-theme="dark"] .hero-description,
-body[data-theme="dark"] .lead {
+html[data-theme="dark"] .feature-card p,
+html[data-theme="dark"] .spec-label,
+html[data-theme="dark"] .spec-value,
+html[data-theme="dark"] .hero-description,
+html[data-theme="dark"] .lead {
   color: var(--text-muted) !important;
 }
 
-body[data-theme="dark"] .bg-white {
+html[data-theme="dark"] .bg-white {
   background-color: var(--surface) !important;
   color: var(--text) !important;
 }
 
-body[data-theme="dark"] .form-control {
+html[data-theme="dark"] .form-control {
   background-color: var(--surface) !important;
   color: var(--text) !important;
   border-color: var(--border) !important;
 }
 
-body[data-theme="dark"] .form-control::placeholder {
+html[data-theme="dark"] .form-control::placeholder {
   color: var(--text-muted) !important;
 }
 
-body[data-theme="dark"] .navbar-collapse {
+html[data-theme="dark"] .navbar-collapse {
   background: var(--surface);
 }
 
-body[data-theme="dark"] .social-btn {
+html[data-theme="dark"] .social-btn {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
 }

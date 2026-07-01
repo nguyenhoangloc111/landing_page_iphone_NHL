@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 // Import các ảnh sản phẩm của bạn
 import imageIphone1 from "../assets/iphone.webp";
 import imageIphone2 from "../assets/iphone_color.webp";
@@ -7,21 +7,28 @@ import imageIphone3 from "../assets/iphone_color1.webp";
 export default function Hero() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [currentIdx, setCurrentIdx] = useState(0);
+  const throttleRef = useRef(null);
 
   const images = [imageIphone1, imageIphone2, imageIphone3];
 
-  // 1. Theo dõi tọa độ chuột để làm hiệu ứng tương tác 3D mượt mà (chỉ desktop)
+  // 1. Theo dõi tọa độ chuột để làm hiệu ứng tương tác 3D mượt mà (chỉ desktop, throttled)
   useEffect(() => {
     // Disable mouse tracking on mobile to improve performance
     if (window.matchMedia("(max-width: 768px)").matches) return;
     
     const handleMouseMove = (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 25;
-      const y = (e.clientY / window.innerHeight - 0.5) * 25;
-      setMousePos({ x, y });
+      if (throttleRef.current) clearTimeout(throttleRef.current);
+      throttleRef.current = setTimeout(() => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 15;
+        const y = (e.clientY / window.innerHeight - 0.5) * 15;
+        setMousePos({ x, y });
+      }, 16); // ~60fps throttle
     };
     window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (throttleRef.current) clearTimeout(throttleRef.current);
+    };
   }, []);
 
   // 2. Tự động chuyển ảnh sau mỗi 4 giây
@@ -63,37 +70,35 @@ export default function Hero() {
         .tech-subtitle {
           letter-spacing: 0.3em; 
           font-size: 13px;
-          background: linear-gradient(90deg, #9b51e0, #00f2fe, #9b51e0);
-          background-size: 200% auto;
+          background: linear-gradient(90deg, #9b51e0, #00f2fe);
+          background-size: 100% auto;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
-          animation: textGlowFlow 4s linear infinite;
+          animation: none;
         }
 
         /* --- NÚT BẤM CÔNG NGHỆ CHUYỂN SẮC --- */
         .btn-hero-prime {
-          background: linear-gradient(135deg, #00f2fe 0%, #9b51e0 50%, #00f2fe 100%) !important;
-          background-size: 200% auto !important;
-          box-shadow: 0 4px 20px rgba(0, 242, 254, 0.25), 0 0 30px rgba(155, 81, 224, 0.1);
-          animation: textGlowFlow 4s linear infinite;
-          transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+          background: linear-gradient(135deg, #00f2fe 0%, #9b51e0 100%) !important;
+          background-size: 100% auto !important;
+          box-shadow: 0 4px 15px rgba(0, 242, 254, 0.2);
+          animation: none;
+          transition: all 0.3s ease !important;
           fontSize: '15.5px';
         }
 
         .btn-hero-prime:hover {
-          transform: scale(1.06) translateY(-3px) !important;
-          box-shadow: 0 12px 30px rgba(0, 242, 254, 0.5), 0 0 40px rgba(155, 81, 224, 0.4);
-          filter: brightness(1.1);
+          transform: translateY(-2px) !important;
+          box-shadow: 0 8px 25px rgba(0, 242, 254, 0.3);
         }
 
         /* --- LINK HOVER CHUYỂN MÀU --- */
         .hero-link-effect {
           color: #005f73;
-          transition: all 0.3s ease;
+          transition: color 0.2s ease;
         }
         .hero-link-effect:hover {
           color: #00f2fe !important;
-          text-shadow: 0 0 8px rgba(0, 242, 254, 0.4);
         }
 
         /* --- NÚT ĐIỀU HƯỚNG MŨI TÊN TRÊN CONTAINER --- */
@@ -101,42 +106,37 @@ export default function Hero() {
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
-          width: 50px;
-          height: 50px;
-          background: rgba(255, 255, 255, 0.4);
-          backdrop-filter: blur(8px);
-          border: 1px solid rgba(255, 255, 255, 0.3);
+          width: 45px;
+          height: 45px;
+          background: rgba(255, 255, 255, 0.3);
+          border: none;
           color: #333;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 20px;
+          font-size: 18px;
           cursor: pointer;
           z-index: 100;
-          transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-          box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+          transition: all 0.2s ease;
         }
 
         .slider-arrow-btn:hover {
-          background: rgba(0, 242, 254, 0.8);
+          background: rgba(0, 242, 254, 0.7);
           color: #fff;
-          border-color: #00f2fe;
-          box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
-          transform: translateY(-50%) scale(1.1);
+          transform: translateY(-50%) scale(1.05);
         }
         
-        .slider-arrow-btn.btn-left { left: 20px; }
-        .slider-arrow-btn.btn-right { right: 20px; }
+        .slider-arrow-btn.btn-left { left: 15px; }
+        .slider-arrow-btn.btn-right { right: 15px; }
 
-        /* Ẩn nhẹ mũi tên khi chuột không ở trong vùng container ảnh để tăng trải nghiệm điện ảnh */
-        .slider-wrapper .slider-arrow-btn { opacity: 0.6; }
-        .slider-wrapper:hover .slider-arrow-btn { opacity: 1; }
+        .slider-wrapper .slider-arrow-btn { opacity: 0.5; }
+        .slider-wrapper:hover .slider-arrow-btn { opacity: 0.9; }
 
         /* --- KEYFRAMES HOẠT HỌA DIỄN TIẾN --- */
         @keyframes textGlowFlow {
           0% { background-position: 0% 50%; }
-          100% { background-position: 400% 50%; }
+          100% { background-position: 100% 50%; }
         }
 
         /* Overwrite transition của hộp 3D để không xung đột với AOS */

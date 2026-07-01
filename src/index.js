@@ -6,8 +6,6 @@ import reportWebVitals from './reportWebVitals';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-// Nhập JavaScript của Bootstrap (cần cho Modal, Carousel, Dropdown...)
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,7 +14,15 @@ root.render(
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+// Defer Bootstrap JS loading to idle time
+if ("requestIdleCallback" in window) {
+  requestIdleCallback(() => {
+    import('bootstrap/dist/js/bootstrap.bundle.min.js');
+  });
+} else {
+  setTimeout(() => {
+    import('bootstrap/dist/js/bootstrap.bundle.min.js');
+  }, 3000);
+}
+
 reportWebVitals();

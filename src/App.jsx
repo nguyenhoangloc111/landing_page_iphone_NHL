@@ -1,15 +1,15 @@
 import "./App.css";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import Features from "./components/Features";
-import Specifications from "./components/Specifications";
-import CTA from "./components/CTA";
-import Footer from "./components/Footer";
-import ProductActions from "./components/ProductActions";
 import ScrollProgress from "./components/ScrollProgress";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense, lazy } from "react";
+
+// Lazy load non-critical components
+const Features = lazy(() => import("./components/Features"));
+const Specifications = lazy(() => import("./components/Specifications"));
+const ProductActions = lazy(() => import("./components/ProductActions"));
+const CTA = lazy(() => import("./components/CTA"));
+const Footer = lazy(() => import("./components/Footer"));
 
 const getInitialTheme = () => {
   if (typeof window === "undefined") return "light";
@@ -24,13 +24,38 @@ const getInitialTheme = () => {
 function App() {
   const [theme, setTheme] = useState(getInitialTheme);
 
+  // Defer AOS initialization to idle time
   useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-      offset: 100,
-      easing: "ease-in-out",
-    });
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(() => {
+        Promise.all([
+          import("aos"),
+          import("aos/dist/aos.css"),
+        ]).then(([AOS]) => {
+          AOS.default.init({
+            duration: 1000,
+            once: true,
+            offset: 100,
+            easing: "ease-in-out",
+          });
+        });
+      });
+    } else {
+      // Fallback for browsers without requestIdleCallback
+      setTimeout(() => {
+        Promise.all([
+          import("aos"),
+          import("aos/dist/aos.css"),
+        ]).then(([AOS]) => {
+          AOS.default.init({
+            duration: 1000,
+            once: true,
+            offset: 100,
+            easing: "ease-in-out",
+          });
+        });
+      }, 2000);
+    }
   }, []);
 
   useEffect(() => {
@@ -47,12 +72,22 @@ function App() {
     <div className="app-shell">
       <Header theme={theme} onToggleTheme={toggleTheme} />
       <Hero />
-      <Features />
-      <Specifications />
-      <ProductActions />
-      <CTA />
+      <Suspense fallback={<div />}>
+        <Features />
+      </Suspense>
+      <Suspense fallback={<div />}>
+        <Specifications />
+      </Suspense>
+      <Suspense fallback={<div />}>
+        <ProductActions />
+      </Suspense>
+      <Suspense fallback={<div />}>
+        <CTA />
+      </Suspense>
       <ScrollProgress />
-      <Footer />
+      <Suspense fallback={<div />}>
+        <Footer />
+      </Suspense>
     </div>
   );
 }
